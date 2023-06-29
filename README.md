@@ -14,6 +14,7 @@ or add static js file
  ``` 
 https://static.dataspike.io/scripts/dataspike-{version}.js
  ```
+Actual version you can find in https://www.npmjs.com/package/@dataspike/docver-widget
 
 How to use:
 
