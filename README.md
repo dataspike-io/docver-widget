@@ -42,7 +42,7 @@ export const renderWidget = async () => {
         DocsVerificationWidget({
             id: 'VC0CE6CB061884763'
             elementId: 'root',
-            apiUrl: 'https://api.dataspike.dev',
+            apiUrl: 'https://api.dataspike.io',
         });
     }
 };
