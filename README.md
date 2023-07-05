@@ -26,11 +26,12 @@ DocsVerificationWidgetProps(props);
 
 Available props:
 
-| Prop   name            |                                                           type                                                           |                                Description |
-|------------------------|:------------------------------------------------------------------------------------------------------------------------:|-------------------------------------------:|
-| id              |                                                          string                                                          |                            Verification Id |
-| apiUrl                 |                                                          string                                                          |                               API base URL |
-| elementId                   |                                                          string                                                          | Id of element when widget will be rendered |
+| Prop   name |         type          |                                Description |
+|-------------|:---------------------:|-------------------------------------------:|
+| id          |        string         |                            Verification Id |
+| apiUrl      |        string         |                               API base URL |
+| elementId   |        string         | Id of element when widget will be rendered |
+| onFinish    | `() => Promise<void>` | Callback raised when user finish verification |
 
 Example:
  ```
