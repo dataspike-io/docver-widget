@@ -26,12 +26,43 @@ DocsVerificationWidgetProps(props);
 
 Available props:
 
-| Prop   name |         type          |                                Description |
-|-------------|:---------------------:|-------------------------------------------:|
-| id          |        string         |                            Verification Id |
-| apiUrl      |        string         |                               API base URL |
-| elementId   |        string         | Id of element when widget will be rendered |
-| onFinish    | `() => Promise<void>` | Callback raised when user finish verification |
+<table>
+    <tr>
+        <th>Prop name</th>
+        <th>Type</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td>string</td>
+        <td>Verification Id</td>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td>string</td>
+        <td>Verification Id</td>
+    </tr>
+    <tr>
+        <td>apiUrl</td>
+        <td>string</td>
+        <td>API base URL</td>
+    </tr>
+    <tr>
+        <td>elementId</td>
+        <td>string</td>
+        <td>Id of element when widget will be rendered</td>
+    </tr>
+    <tr>
+        <td>onFinish</td>
+        <td>() => Promise&lt;void&gt;</td>
+        <td>Callback raised when user finish verification</td>
+    </tr>
+    <tr>
+        <td>onInit</td>
+        <td>(verificationStatus: 'completed' | 'expired' | 'active' | 'error', error?: unknown) => Promise&lt;void&gt;</td>
+        <td>Callback raised before verification started</td>
+    </tr>
+</table>
 
 Example:
  ```
