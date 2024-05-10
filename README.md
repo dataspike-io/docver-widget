@@ -38,11 +38,6 @@ Available props:
         <td>Verification Id</td>
     </tr>
     <tr>
-        <td>id</td>
-        <td>string</td>
-        <td>Verification Id</td>
-    </tr>
-    <tr>
         <td>apiUrl</td>
         <td>string</td>
         <td>API base URL</td>
