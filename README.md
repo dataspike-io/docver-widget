@@ -66,7 +66,7 @@ import { DocsVerificationWidget } from '@dataspike/docver-widget';
 export const renderWidget = async () => {
     if (container) {
         DocsVerificationWidget({
-            id: 'VC0CE6CB061884763'
+            id: 'VF57124F182867E0'
             elementId: 'root',
             apiUrl: 'https://api.dataspike.io',
         });
@@ -75,5 +75,27 @@ export const renderWidget = async () => {
 
 renderWidget()
  ```
+
+Or 
+
+```
+<script type="module" defer src="https://static.dataspike.io/scripts/dataspike-{version}.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const renderWidget = async () => {
+            const container = window.document.querySelector('#root');
+            if (container) {
+                window.DocsVerificationWidget({
+                    id: 'VF57124F182867E0',
+                    elementId: 'root',
+                    apiUrl: 'https://api.dataspike.io',
+                });
+            }
+        };
+
+        renderWidget()
+    });
+</script>
+```
 
 If you have any question about integration, please [contact us](https://www.dataspike.io/contact-us).
