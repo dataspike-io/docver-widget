@@ -3,7 +3,7 @@
 Install:
 
 ``` 
-yarn @dataspike/docver-widget
+yarn install @dataspike/docver-widget
  ```
 or
  ``` 
