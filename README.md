@@ -57,6 +57,11 @@ Available props:
         <td>(verificationStatus: 'completed' | 'expired' | 'active' | 'error', error?: unknown) => Promise&lt;void&gt;</td>
         <td>Callback raised before verification started</td>
     </tr>
+    <tr>
+        <td>theme</td>
+        <td>Check index.d.ts inside package</td>
+        <td>Custom styles</td>
+    </tr>
 </table>
 
 Example:
@@ -96,6 +101,19 @@ Or
         renderWidget()
     });
 </script>
+```
+Html:
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"></div>
+    </body>
+</html>
 ```
 
 If you have any question about integration, please [contact us](https://www.dataspike.io/contact-us).
