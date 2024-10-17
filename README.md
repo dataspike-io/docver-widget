@@ -1,137 +1,215 @@
-# DocVer-widget
+# DocVer Widget Documentation
+### Introduction
+DocVer Widget is a tool that allows users to easily verify documents through an interactive interface. This widget helps ensure document verification and provides feedback on the verification status.
 
 ### Live Demo
+You can see the widget in action by visiting the <a href="https://dash.dataspike.io/widget/demo" target="_blank">live demo</a>.
 
-Please check <a href="https://dash.dataspike.io/widget/demo" target="_blank">live demo</a>
+### Installation
+You can install the DocVer widget in several ways:
 
-### Install
+### Option 1: Using Yarn
 
-``` 
+If you have Yarn installed, run the following command in your terminal:
+
+```bash
 yarn install @dataspike/docver-widget
- ```
-or
- ``` 
-npm i @dataspike/docver-widget
- ```
-or add static js file
+```
 
- ``` 
-https://static.dataspike.io/scripts/dataspike-{version}.js
- ```
-Actual version you can find in https://www.npmjs.com/package/@dataspike/docver-widget
+### Option 2: Using NPM
+If you prefer NPM, use this command:
 
-How to use:
+```bash
+npm install @dataspike/docver-widget
+```
 
-``` 
-import { DocsVerificationWidget } from @dataspike/docver-widget;
-....
-DocsVerificationWidgetProps(props);
- ```
+### Option 3: Linking a Static JS File
+You can also link the widget directly in your HTML by adding the following `<script>` tag. Replace `{version}` with the current version number found on [npm](https://www.npmjs.com/package/@dataspike/docver-widget):
 
-Available props:
+```html
+<script src="https://static.dataspike.io/scripts/dataspike-{version}.js"></script>
+```
 
-<table>
-    <tr>
-        <th>Prop name</th>
-        <th>Type</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td>id</td>
-        <td>string</td>
-        <td>Check 
-            <a target="_blank" 
-            href="https://docs.dataspike.io/api#tag/Verifications/operation/create-verification">
-                API documentation
-            </a>
-        </td>
-    </tr>
-    <tr>
-        <td>apiUrl</td>
-        <td>string</td>
-        <td>
-            <a target="_blank" href="https://docs.dataspike.io/api">
-                https://api.dataspike.io
-            </a>
-        </td>
-    </tr>
-    <tr>
-        <td>elementId</td>
-        <td>string</td>
-        <td>Id of element when widget will be rendered</td>
-    </tr>
-    <tr>
-        <td>onFinish</td>
-        <td>() => Promise&lt;void&gt;</td>
-        <td>Callback raised when user finish verification</td>
-    </tr>
-    <tr>
-        <td>onInit</td>
-        <td>(verificationStatus: 'completed' | 'expired' | 'active' | 'error', error?: unknown) => Promise&lt;void&gt;</td>
-        <td>Callback raised before verification started</td>
-    </tr>
-    <tr>
-        <td>theme</td>
-        <td>Check theme section</td>
-        <td>Custom styles</td>
-    </tr>
-</table>
+## How to Use the Widget
+### Step 1: Import the Widget
+If you are using a JavaScript framework (like React), start by importing the widget:
 
-### Example:
- ```
+```javascript
 import { DocsVerificationWidget } from '@dataspike/docver-widget';
+```
 
-export const renderWidget = async () => {
-    if (container) {
-        DocsVerificationWidget({
-            id: 'VF57124F182867E0'
-            elementId: 'root',
-            apiUrl: 'https://api.dataspike.io',
-        });
+### Step 2: Create a Verification
+Before rendering the widget, you need to create a verification for the applicant using the API. Here’s how to do it:
+
+```javascript
+const createVerification = async (applicantId, profileId) => {
+    const response = await fetch('https://api.dataspike.io/api/v3/verifications', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            // Add any required authentication headers here
+        },
+        body: JSON.stringify({
+            applicant_id: applicantId,
+            profile_id: profileId,
+            expiration_minutes: 240,
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to create verification');
     }
+
+    const data = await response.json();
+    return data.verification_url_id; // The ID you'll use in the widget
 };
 
-renderWidget()
- ```
-
-Or
-
 ```
-<script type="module" defer src="https://static.dataspike.io/scripts/dataspike-{version}.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const renderWidget = async () => {
-            const container = window.document.querySelector('#root');
-            if (container) {
-                window.DocsVerificationWidget({
-                    id: 'VF57124F182867E0',
-                    elementId: 'root',
-                    apiUrl: 'https://api.dataspike.io',
-                });
-            }
-        };
 
-        renderWidget()
-    });
-</script>
+### Step 3: Render the Widget
+Once you have the `verification_url_id`, you can render the widget:
+
+```javascript
+const renderWidget = async () => {
+   const applicantId = '01827ed4-c928-7a3c-9a30-7ab7cc169d11'; // Replace with your applicant ID
+   const profileId = '01827ed4-c928-7a3c-9a30-7ab7cc169d11';  // Replace with your Verification Profile ID
+
+   const verificationUrlId = await createVerification(applicantId, profileId);
+   const container = document.getElementById('root');
+   if (container) {
+      DocsVerificationWidget({
+         id: verificationUrlId, // Use the obtained verification URL ID
+         elementId: 'root',
+         apiUrl: 'https://api.dataspike.io',
+      });
+   }
+};
+
+renderWidget();
 ```
-### Html:
+
+### Alternative Method: Using HTML `<script>` Tags
+If you prefer using plain HTML and JavaScript, do it like this:
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-    </head>
-    <body>
-        <noscript>You need to enable JavaScript to run this app.</noscript>
-        <div id="root"></div>
-    </body>
-</html>
+<head>
+   <meta charset="utf-8" />
+   <script type="module" defer src="https://static.dataspike.io/scripts/dataspike-{version}.js"></script>
+</head>
+<body>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="root"></div>
+<script>
+   const createVerification = async (applicantId, profileId) => {
+      const response = await fetch('https://api.dataspike.io/api/v3/verifications', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json',
+            // Add any required authentication headers here
+         },
+         body: JSON.stringify({
+            applicant_id: applicantId,
+            profile_id: profileId,
+            expiration_minutes: 240,
+         }),
+      });
 
+      if (!response.ok) {
+         throw new Error('Failed to create verification');
+      }
+
+      const data = await response.json();
+      return data.verification_url_id; // The ID you'll use in the widget
+   };
+
+   document.addEventListener('DOMContentLoaded', () => {
+      const renderWidget = async () => {
+         const applicantId = '01827ed4-c928-7a3c-9a30-7ab7cc169d11'; // Replace with your applicant ID
+         const profileId = '01827ed4-c928-7a3c-9a30-7ab7cc169d11';  // Replace with your Verification Profile ID
+
+         const verificationUrlId = await createVerification(applicantId, profileId);
+         const container = document.querySelector('#root');
+         if (container) {
+            window.DocsVerificationWidget({
+               id: verificationUrlId, // Use the obtained verification URL ID
+               elementId: 'root',
+               apiUrl: 'https://api.dataspike.io',
+            });
+         }
+      };
+      renderWidget();
+   });
+</script>
+</body>
+</html>
+```
+
+#### Widget Properties
+The widget can be customized using several properties. Here’s a description of each property you can use:
+
+| Property Name         | Type   | Description                                                                                                                                                                                                                                                                                                         |
+|-----------------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `applicantId`        | `string` | A unique identifier assigned to each applicant in the system. This ID is used to track and manage data for a specific user applying for document verification. For more details, visit the [Applicants API](https://docs.dataspike.io/api/#tag/Applicants).                                                         |
+| `profileId`          | `string` | A unique identifier for a verification profile that contains parameters and settings for the verification process. This ID specifies the checks that should be performed for each applicant. For more information, check the [Verification Profiles API](https://docs.dataspike.io/api/#tag/Verification-profiles). |
+| `id`                  | `string` | Unique identifier for the document to be verified. This is the same as `verification_url_id`. This is the Verification Short ID, used to verify and reference a specific verification process or entity. For further information, see the [Verifications API](https://docs.dataspike.io/api/#tag/Verifications).    |
+| `apiUrl`              | `string` | API URL for interaction. Defaults to `https://api.dataspike.io`.                                                                           |
+| `elementId`           | `string` | ID of the HTML element where the widget will be rendered.                                                                                  |
+| `onFinish`            | `() => Promise<void>` | Callback invoked when the user finishes the verification process.                                                                          |
+| `onInit`              | `(verificationStatus: 'completed' &#124; 'expired' &#124; 'active' &#124; 'error', error?: unknown) => Promise<void>` | Callback triggered before the verification starts. Provides status and any errors, which can be useful for debugging or informing the user. |
+| `theme`               | `object` | Custom styles for the widget. See the "Theme" section below for details.                                                                   |
+
+
+
+### Usage Examples
+Here’s an example of using the widget with event handling:
+
+```javascript
+DocsVerificationWidget({
+    id: 'VF57124F182867E0',
+    elementId: 'root',
+    apiUrl: 'https://api.dataspike.io',
+    onFinish: async () => {
+        alert('Verification completed!');
+    },
+    onInit: async (status) => {
+        console.log('Verification status:', status);
+    },
+});
+```
+
+### Customizing the Theme
+You can customize the appearance of the widget by providing a theme object. Below are the parameters you can change:
+
+```javascript
+const customTheme = {
+    palette: {
+        textMain: '#000000',
+        primaryA1: '#6664E8',
+        // Add other colors as needed
+    },
+    typography: {
+        fontFamily: 'Mont, sans-serif',
+        h1: {
+            fontSize: '50px',
+            fontWeight: '500',
+        },
+        // Customize other text styles
+    },
+};
+
+// Include the theme in your widget call
+DocsVerificationWidget({
+    id: 'VF57124F182867E0',
+    elementId: 'root',
+    theme: customTheme,
+});
 ```
 
 ### Theme:
 In comment described default value:
+
 ```typescript
 export type Theme = {
     palette?: Partial<{
@@ -214,6 +292,26 @@ export type Theme = {
     }>;
 };
 ```
+## Errors and Debugging
 
+If you encounter issues with the widget, check the following common errors:
+
+1. **Invalid Document ID**: Ensure that the `id` is correct and corresponds to the document in the system.
+2. **Connection Issues**: Verify that the `apiUrl` is correct and the API is accessible.
+3. **JavaScript Errors**: Open the browser console (F12 or Cmd + Option + I) and check for any error messages.
+
+## Frequently Asked Questions (FAQ)
+
+1. **How do I change the appearance of the widget?**
+   You can change the appearance by providing a `theme` object with custom styles.
+
+2. **What should I do if the widget does not display?**
+   Check that the `elementId` is correct and that there is an element with this ID in your HTML.
+
+3. **How do I handle verification results?**
+   Use the `onFinish` callback to perform actions after verification is completed, such as showing a notification to the user.fication is completed, such as showing a notification to the user.
+
+## Additional Documentation
+For comprehensive details about the API, including endpoints, request/response formats, and more, please refer to the <a href="https://docs.dataspike.io/api/#section/Introduction" target="_blank">Dataspike API Documentation</a> Dataspike API Documentation. This resource provides in-depth information essential for integrating and utilizing the API effectively.
 
 If you have any question about integration, please [contact us](https://www.dataspike.io/contact-us).
