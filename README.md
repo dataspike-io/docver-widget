@@ -58,13 +58,13 @@ const renderWidget = async () => {
 ```
 ### Implementation Details for `getVerificationId`
 
-The `getVerificationId` API should be implemented by your development team. This API is responsible for creating a verification process on the backend and should only return the `verificationUrlId` to the frontend.
+The `getVerificationId` API should be implemented by your development team. This API is responsible for creating a verification process on the **backend** and should only return the `verificationUrlId` to the frontend.
 
 - **Parameters**: The API will internally use `applicantId` and `profileId` to create the verification. These parameters must be kept confidential and should not be exposed to the frontend or any external parties.
 
 - **Verification Creation**: Upon receiving a request to `getVerificationId`, the API will handle the creation of the verification with the specified `applicantId` and `profileId`.
 
-- **Response**: Once the verification is successfully created, the API should respond with only the `verificationUrlId`, which is the identifier required for rendering the widget. This ensures that sensitive information remains secure and is not accessible outside of the backend.
+- **Response**: Once the verification is successfully created, the API should respond with only the `verificationUrlId`, which is the identifier required for rendering the widget. This ensures that sensitive information remains secure and is not accessible outside of the **backend**.
 
 By following this approach, you maintain the integrity and confidentiality of the verification process while ensuring a smooth integration wit
 
