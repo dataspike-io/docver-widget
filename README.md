@@ -38,43 +38,14 @@ If you are using a JavaScript framework (like React), start by importing the wid
 import { DocsVerificationWidget } from '@dataspike/docver-widget';
 ```
 
-### Step 2: Create a Verification
-Before rendering the widget, you need to create a verification for the applicant using the API. Here’s how to do it:
+### Step 2:  Render the Widget
+Before rendering the widget, you need to create a verification for the applicant using the API. This should be done on the backend, and you will only pass the verificationUrlId to the frontend.
 
-```javascript
-const createVerification = async (applicantId, profileId) => {
-    const response = await fetch('https://api.dataspike.io/api/v3/verifications', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            // Add any required authentication headers here
-        },
-        body: JSON.stringify({
-            applicant_id: applicantId,
-            profile_id: profileId,
-            expiration_minutes: 240,
-        }),
-    });
-
-    if (!response.ok) {
-        throw new Error('Failed to create verification');
-    }
-
-    const data = await response.json();
-    return data.verification_url_id; // The ID you'll use in the widget
-};
-
-```
-
-### Step 3: Render the Widget
-Once you have the `verification_url_id`, you can render the widget:
+The code looks like this:
 
 ```javascript
 const renderWidget = async () => {
-   const applicantId = '01827ed4-c928-7a3c-9a30-7ab7cc169d11'; // Replace with your applicant ID
-   const profileId = '01827ed4-c928-7a3c-9a30-7ab7cc169d11';  // Replace with your Verification Profile ID
-
-   const verificationUrlId = await createVerification(applicantId, profileId);
+   const verificationUrlId = await getVerificationId(); // using your backend API
    const container = document.getElementById('root');
    if (container) {
       DocsVerificationWidget({
@@ -84,9 +55,18 @@ const renderWidget = async () => {
       });
    }
 };
-
-renderWidget();
 ```
+### Implementation Details for `getVerificationId`
+
+The `getVerificationId` API should be implemented by your development team. This API is responsible for creating a verification process on the backend and should only return the `verificationUrlId` to the frontend.
+
+- **Parameters**: The API will internally use `applicantId` and `profileId` to create the verification. These parameters must be kept confidential and should not be exposed to the frontend or any external parties.
+
+- **Verification Creation**: Upon receiving a request to `getVerificationId`, the API will handle the creation of the verification with the specified `applicantId` and `profileId`.
+
+- **Response**: Once the verification is successfully created, the API should respond with only the `verificationUrlId`, which is the identifier required for rendering the widget. This ensures that sensitive information remains secure and is not accessible outside of the backend.
+
+By following this approach, you maintain the integrity and confidentiality of the verification process while ensuring a smooth integration wit
 
 ### Alternative Method: Using HTML `<script>` Tags
 If you prefer using plain HTML and JavaScript, do it like this:
@@ -102,34 +82,9 @@ If you prefer using plain HTML and JavaScript, do it like this:
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="root"></div>
 <script>
-   const createVerification = async (applicantId, profileId) => {
-      const response = await fetch('https://api.dataspike.io/api/v3/verifications', {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json',
-            // Add any required authentication headers here
-         },
-         body: JSON.stringify({
-            applicant_id: applicantId,
-            profile_id: profileId,
-            expiration_minutes: 240,
-         }),
-      });
-
-      if (!response.ok) {
-         throw new Error('Failed to create verification');
-      }
-
-      const data = await response.json();
-      return data.verification_url_id; // The ID you'll use in the widget
-   };
-
    document.addEventListener('DOMContentLoaded', () => {
       const renderWidget = async () => {
-         const applicantId = '01827ed4-c928-7a3c-9a30-7ab7cc169d11'; // Replace with your applicant ID
-         const profileId = '01827ed4-c928-7a3c-9a30-7ab7cc169d11';  // Replace with your Verification Profile ID
-
-         const verificationUrlId = await createVerification(applicantId, profileId);
+         const verificationUrlId = await getVerificationId(); // using your backend API
          const container = document.querySelector('#root');
          if (container) {
             window.DocsVerificationWidget({
