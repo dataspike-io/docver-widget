@@ -68,6 +68,9 @@ The `getVerificationId` API should be implemented by your development team. This
 
 By following this approach, you maintain the integrity and confidentiality of the verification process while ensuring a smooth integration wit
 
+**_NOTE: Do not store API KEY inside widget, only use API KEY on a backend to crate verification links_**
+
+
 ### Alternative Method: Using HTML `<script>` Tags
 If you prefer using plain HTML and JavaScript, do it like this:
 
