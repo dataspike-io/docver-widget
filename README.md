@@ -1,6 +1,10 @@
 # DocVer-widget
 
-Install:
+### Live Demo
+
+Please check <a href="https://dash.dataspike.io/widget/demo" target="_blank">live demo</a>
+
+### Install
 
 ``` 
 yarn install @dataspike/docver-widget
@@ -35,12 +39,21 @@ Available props:
     <tr>
         <td>id</td>
         <td>string</td>
-        <td>Verification Id</td>
+        <td>Check 
+            <a target="_blank" 
+            href="https://docs.dataspike.io/api#tag/Verifications/operation/create-verification">
+                API documentation
+            </a>
+        </td>
     </tr>
     <tr>
         <td>apiUrl</td>
         <td>string</td>
-        <td>API base URL</td>
+        <td>
+            <a target="_blank" href="https://docs.dataspike.io/api">
+                https://api.dataspike.io
+            </a>
+        </td>
     </tr>
     <tr>
         <td>elementId</td>
@@ -63,7 +76,6 @@ Available props:
         <td>Custom styles</td>
     </tr>
 </table>
-
 
 ### Example:
  ```
