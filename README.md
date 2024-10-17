@@ -39,7 +39,7 @@ import { DocsVerificationWidget } from '@dataspike/docver-widget';
 ```
 
 ### Step 2:  Render the Widget
-Before rendering the widget, you need to create a verification for the applicant using the API. This should be done on the backend, and you will only pass the verificationUrlId to the frontend.
+Before rendering the widget, you need to create a verification for the applicant using the API. This should be done on the **backend**, and you will only pass the verificationUrlId to the frontend.
 
 The code looks like this:
 
